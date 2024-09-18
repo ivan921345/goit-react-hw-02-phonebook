@@ -36,7 +36,7 @@ class App extends Component {
 
     for (let i = 0; i < this.state.contacts.length; i++) {
       if (
-        e.target.children[0].value.toLowerCase() ===
+        e.target.elements.name.value.toLowerCase() ===
         this.state.contacts[i].name.toLowerCase()
       ) {
         alert('223232');
@@ -48,7 +48,7 @@ class App extends Component {
         ...contacts,
         {
           id: shortId.generate(),
-          name: e.target.children[0].value,
+          name: e.target.elements.name.value,
           number: number,
         },
       ],
