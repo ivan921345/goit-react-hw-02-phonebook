@@ -21,25 +21,16 @@ class App extends Component {
       contacts: contacts.filter(contact => contact.name !== e.target.value),
     }));
   };
-  onInputChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
-  onNumberInputChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
-  };
   onFilterInputChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
-  onFormSubmit = e => {
-    e.preventDefault();
-    console.log(e.target);
-
+  onFormSubmit = (values, { resetForm }) => {
+    console.log(values);
     for (let i = 0; i < this.state.contacts.length; i++) {
       if (
-        e.target.elements.name.value.toLowerCase() ===
-        this.state.contacts[i].name.toLowerCase()
+        values.name.toLowerCase() === this.state.contacts[i].name.toLowerCase()
       ) {
-        alert('223232');
+        alert('This contact has already been added');
         return;
       }
     }
@@ -48,11 +39,13 @@ class App extends Component {
         ...contacts,
         {
           id: shortId.generate(),
-          name: e.target.elements.name.value,
-          number: number,
+          name: values.name,
+          number: values.number,
         },
       ],
     }));
+
+    resetForm();
   };
   render() {
     const normalizedFiler = this.state.filter.toLowerCase();
@@ -71,11 +64,7 @@ class App extends Component {
           color: '#010101',
         }}
       >
-        <Form
-          onChange={this.onInputChange}
-          onSubmit={this.onFormSubmit}
-          onNumberInputChange={this.onNumberInputChange}
-        />
+        <Form onSubmit={this.onFormSubmit} />
         <Filter
           contacts={this.state.contacts}
           onFilterInputChange={this.onFilterInputChange}
